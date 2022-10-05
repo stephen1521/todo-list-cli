@@ -1,3 +1,4 @@
+//global variables
 const prompt = require('prompt-sync')({sigint: true});
 let end = 0;
 let toDoList = [];
@@ -10,11 +11,10 @@ let complete = '[complete] ';
 let bool = false;
 let bool2 = false;
 let str = 'None';
-
+//main
 console.log('\n'+'Welcome to the To-Do List Manager Application!');
 divider();
 isEmpty();
-
 while(end !== -1){
     while(action() === -1){
         console.log('Please enter a valid action number\n');
@@ -25,7 +25,7 @@ while(end !== -1){
     divider();
     list();
 }
-
+// line across terminal
 function divider(){
     console.log('');
     let str = '';
@@ -34,7 +34,7 @@ function divider(){
     }
     console.log(str+'\n');
 }
-
+//prints list is empty
 function isEmpty(){
     if(toDoList.length === 0){
         console.log('Your to-do list is empty.'+'\n');
@@ -42,7 +42,7 @@ function isEmpty(){
     }
     return false;
 }
-
+//checks for input and decides what to do
 function action(){
     console.log('~ Select an action ~');
     console.log('[1] Create a to-do item');
@@ -130,7 +130,7 @@ function action(){
         return -1;
     }
 }
-
+//creates a to-do
 function createToDo(){
     console.log('~ Creating a new to-do item ~');
     console.log('What is this to-do item called?');
@@ -141,7 +141,7 @@ function createToDo(){
     toDoListUtilTime.push(str);
     toDoListUtilNote.push(str);
 }
-
+//completes a to-do
 function completeToDo(){
     console.log('~ Completing a to-do item ~');
     console.log('Which to-do item would you like to complete?');
@@ -157,7 +157,7 @@ function completeToDo(){
         return -1;
     }
 }
-
+//prints to-do list
 function list(){
     if(isEmpty()){
     }else{
@@ -170,7 +170,7 @@ function list(){
     }
     console.log('');
 }
-
+// turns uncompletes a to-do item
 function uncompleteToDo(){
      console.log('~ Uncompleting a to-do item ~');
      console.log('Which to-do item would you like to uncomplete?');
@@ -185,7 +185,7 @@ function uncompleteToDo(){
         return -1;
     }
 }
-
+//checks if all to-do's are incomplete
 function isIncomplete(){
     for(let i of toDoListUtil){
         if(i === complete){
@@ -193,7 +193,7 @@ function isIncomplete(){
         }
     }
 }
-
+//checks if all to-do's are complete
 function isComplete(){
     for(let i of toDoListUtil){
         if(i === incomplete){
@@ -201,7 +201,7 @@ function isComplete(){
         }
     }
 }
-
+// deletes a to-do item
 function deleteToDo(){
     console.log('~ What to-do item would you like to delete? ~');
     let input = Number(prompt('> '));
@@ -215,7 +215,7 @@ function deleteToDo(){
         return -1;
     }
 }
-
+// edits a to-do item text
 function editToDoText(){
     console.log('~ What to-do item would you like to edit ~');
     let input = Number(prompt('> '));
@@ -227,7 +227,8 @@ function editToDoText(){
         return -1;
     }
 }
-
+//checks what to-do item you want to add a date
+//or time to.
 function dateTimeUtil(){
     console.log('What to-do item would you like to add a date, time, or both to?');
     let input = Number(prompt('> '));
@@ -260,7 +261,7 @@ function dateTimeUtil(){
         return -1;
     }
 }
-
+// adds date to to-do item
 function addDate(input){
     console.log('Enter a date, day, or both')
     let input2 = prompt('> ');
@@ -268,14 +269,14 @@ function addDate(input){
 
 
 }
-
+//adds time to to-do item
 function addTime(input){
     console.log('Enter a time');
     let input2 = prompt('> ');
     toDoListUtilTime[input] = input2;
 
 }
-
+//checks what item you want to edit a date or time to. 
 function editDateTime(){
     console.log('What to-do item would you like to edit the date, time, or both to?');
     let input = Number(prompt('> '));
@@ -308,7 +309,7 @@ function editDateTime(){
         return -1;
     }
 }
-
+//adds note to to-do item
 function addNote(){
     console.log('What to-do item would you like to add a note to?');
     let input = Number(prompt('> '));
@@ -324,7 +325,7 @@ function addNote(){
         return -1;
     }
 }
-
+//edits the to-do item note
 function editNote(){
     console.log('What to-do item note would you like to edit?');
     let input = Number(prompt('> '));
