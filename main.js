@@ -210,6 +210,7 @@ function deleteToDo(){
         toDoListUtil.splice(input - 1, 1);
         toDoListUtilDate.splice(input - 1, 1);
         toDoListUtilTime.splice(input - 1, 1);
+        toDoListUtilNote.splice(input - 1, 1);
     }else{
         return -1;
     }
