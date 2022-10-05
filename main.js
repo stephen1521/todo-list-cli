@@ -4,6 +4,7 @@ let toDoList = [];
 let toDoListUtil = [];
 let toDoListUtilDate = [];
 let toDoListUtilTime = [];
+let toDoListUtilNote = [];
 let incomplete = '[incomplete] ';
 let complete = '[complete] ';
 let bool = false;
@@ -35,9 +36,11 @@ function divider(){
 }
 
 function isEmpty(){
-    if(toDoListUtil.length === 0){
+    if(toDoList.length === 0){
         console.log('Your to-do list is empty.'+'\n');
+        return true;
     }
+    return false;
 }
 
 function action(){
@@ -49,7 +52,9 @@ function action(){
     console.log('[5] Edit to-do item text');
     console.log('[6] Add a date, time, or both to a to-do item');
     console.log('[7] Edit to-do item date, time, or both');
-    console.log('[8] Exit application');
+    console.log('[8] Add a note to a to-do item');
+    console.log('[9] Edit a to-do item note');
+    console.log('[0] Exit application');
     let input = Number(prompt('> '));
     console.log('');
     if(input === 1){
@@ -100,9 +105,26 @@ function action(){
                 console.log('Please enter a valid item number\n');
             }
         }else{
-            console.log('There is nothing to edit becuase the list is empty');
+            console.log('There is nothing to edit becuase the to-do list is empty');
         }
     }else if(input === 8){
+        if(toDoList.length !== 0){
+            while(addNote() === -1){
+                console.log('Please enter a valid item number\n');
+            }
+        }else{
+            console.log('There is nothing to add a note to becuase the list is empty');
+        }
+    }else if(input === 9){
+        if(toDoList.length !== 0){
+            while(editNote() === -1){
+                console.log('Please enter a valid item number\n');
+            }
+        }else{
+            console.log('There is nothing to edit becuase the to-do list is empty');
+        }
+    }
+    else if(input === 0){
         end = -1;
     } else{
         return -1;
@@ -117,6 +139,7 @@ function createToDo(){
     toDoList.push(input);
     toDoListUtilDate.push(str);
     toDoListUtilTime.push(str);
+    toDoListUtilNote.push(str);
 }
 
 function completeToDo(){
@@ -125,6 +148,10 @@ function completeToDo(){
     let input = Number(prompt('> '));
     console.log('');
     if(input > 0 && input < toDoList.length + 1){
+        if(toDoListUtil[input - 1] === complete){
+            console.log('The to-do item is already complete');
+            return;
+        }
         toDoListUtil[input - 1] = complete;
     }else{
         return -1;
@@ -132,9 +159,14 @@ function completeToDo(){
 }
 
 function list(){
-    console.log('You have ' + toDoList.length + ' to-do item(s).');
-    for(let i = 0; i < toDoList.length; i++){
-        console.log((i + 1) + '. ' + toDoListUtil[i] + ' ' + toDoList[i] + ' | Date to be done by: ' + toDoListUtilDate[i] + ' | Time to be done by: ' + toDoListUtilTime[i]);
+    if(isEmpty()){
+    }else{
+        console.log('You have ' + toDoList.length + ' to-do item(s).');
+        for(let i = 0; i < toDoList.length; i++){
+            console.log((i + 1) + '. ' + toDoListUtil[i] + ' ' + toDoList[i]); 
+            console.log('   Date to be done by: ' + toDoListUtilDate[i] + ' | Time to be done by: ' + toDoListUtilTime[i]);
+            console.log('   Note(s): '+ toDoListUtilNote[i]);
+        }
     }
     console.log('');
 }
@@ -144,6 +176,10 @@ function uncompleteToDo(){
      console.log('Which to-do item would you like to uncomplete?');
     let input = Number(prompt('> '));
     if(input > 0 && input < toDoList.length + 1){
+        if(toDoListUtil[input - 1] === incomplete){
+            console.log('The to-do item is already incomplete');
+            return;
+        }
         toDoListUtil[input - 1] = incomplete;
     }else{
         return -1;
@@ -172,6 +208,8 @@ function deleteToDo(){
     if(input > 0 && input < toDoList.length + 1){
         toDoList.splice(input - 1, 1);
         toDoListUtil.splice(input - 1, 1);
+        toDoListUtilDate.splice(input - 1, 1);
+        toDoListUtilTime.splice(input - 1, 1);
     }else{
         return -1;
     }
@@ -266,6 +304,38 @@ function editDateTime(){
                 return -1;
             }
     } else {
+        return -1;
+    }
+}
+
+function addNote(){
+    console.log('What to-do item would you like to add a note to?');
+    let input = Number(prompt('> '));
+    if(input > 0 && input < toDoList.length + 1){
+        if(toDoListUtilNote[input - 1] !== 'None'){
+            console.log('Can\' add a note becuase a note already exist');
+            return;
+        }
+        console.log('Enter note');
+        let input2 = prompt('> ');
+        toDoListUtilNote[input - 1] = input2;
+    }else{
+        return -1;
+    }
+}
+
+function editNote(){
+    console.log('What to-do item note would you like to edit?');
+    let input = Number(prompt('> '));
+    if(input > 0 && input < toDoList.length + 1){
+        if(toDoListUtilNote[input - 1] === 'None'){
+            console.log('No note to edit in that to-do item');
+            return;
+        }
+        console.log('Enter note');
+        let input2 = prompt('> ');
+        toDoListUtilNote[input - 1] = input2;
+    }else{
         return -1;
     }
 }
